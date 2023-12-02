@@ -13,6 +13,9 @@ module.exports = {
       backgroundImage: {
         gradient: 'linear-gradient(278deg, #b066f3, #c20dc5);',
       },
+      screens: {
+        lg: { max: '900px' },
+      },
     },
   },
   plugins: [],
