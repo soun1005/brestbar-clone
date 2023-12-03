@@ -10,8 +10,6 @@ const BarCard = ({ type, name, address, categories, distance, geography }) => {
   const { setLocation } = useAppContext();
 
   const handleEyeClick = () => {
-    console.log('eye is clicked');
-    // const newGeography = geography;
     setLocation(geography);
   };
 

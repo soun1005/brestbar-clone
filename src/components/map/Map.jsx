@@ -33,14 +33,12 @@ const Map = ({ barsData, curLng, curLat }) => {
   }, [barsData, curLng, curLat, lat, lng, zoom]);
 
   useEffect(() => {
-    console.log('hello');
     if (curLng && curLat) {
       setLng(curLng);
       setLat(curLat);
       setZoom(20);
     }
   }, [curLat, curLng]);
-  console.log(lng, lat);
 
   return (
     <div
