@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  env: {
+    MAP_TOKEN: process.env.MAP_TOKEN,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

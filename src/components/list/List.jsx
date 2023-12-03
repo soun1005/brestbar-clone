@@ -14,7 +14,8 @@ const List = ({ barsData, curLocation }) => {
     setDataDisplay(barsData.slice(0, barDataCount));
   }, [barsData]);
 
-  console.log(dataDisplay);
+  // console.log(dataDisplay);
+  console.log(process.env.MAP_TOKEN);
 
   // plus button function
   const handleLoadPlus = () => {

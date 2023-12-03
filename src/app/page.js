@@ -3,8 +3,8 @@
 import { useState, useEffect, use } from 'react';
 import NavBar from '@/components/navBar/Navbar';
 import List from '@/components/list/List';
-
-// import Map from '@/components/map/Map';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import Map from '@/components/map/Map';
 
 export default function Home() {
   const [barsData, setBarsData] = useState([]);
@@ -46,7 +46,7 @@ export default function Home() {
       <NavBar></NavBar>
 
       <List barsData={barsData} curLocation={currentLocation}></List>
-      {/* <Map></Map> */}
+      <Map></Map>
     </main>
   );
 }
