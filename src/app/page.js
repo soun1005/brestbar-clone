@@ -20,8 +20,6 @@ export default function Home() {
     }
   }, []);
 
-  // console.log(currentLocation);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,16 +40,13 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log(barsData);
-
   return (
     // <main className="flex max-h-screen min-h-screen flex-col overflow-hidden">
-    <main className="flex max-h-screen min-h-screen flex-col">
+    <main className="box-border flex max-h-screen min-h-screen flex-col">
       <NavBar></NavBar>
-      <div>
-        <List barsData={barsData} curLocation={currentLocation}></List>
-        {/* <Map></Map> */}
-      </div>
+
+      <List barsData={barsData} curLocation={currentLocation}></List>
+      {/* <Map></Map> */}
     </main>
   );
 }
