@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Divider from '../common/Divider';
 import FilterBtn from '../common/FilterBtn';
 import BarCard from '../common/BarCard';
@@ -7,31 +7,55 @@ import distanceCalculator from '../../helpers/distanceCalculator';
 
 const List = ({ barsData, curLocation }) => {
   const [activeFilter, setActiveFilter] = useState(null);
+  const [dataDisplay, setDataDisplay] = useState([]);
+  const barDataCount = 5;
 
-  console.log('outside Memo curLocation:', curLocation);
+  useEffect(() => {
+    setDataDisplay(barsData.slice(0, barDataCount));
+  }, [barsData]);
+
+  console.log(dataDisplay);
+
+  // plus button function
+  const handleLoadPlus = () => {
+    const index = dataDisplay.length + barDataCount;
+    // if there is more data than barDataCount and displaying data is lower than the whole data
+    if (
+      barsData.length > barDataCount &&
+      dataDisplay.length <= barsData.length
+    ) {
+      setDataDisplay([
+        ...dataDisplay,
+        ...barsData.slice(dataDisplay.length, index),
+      ]);
+    }
+  };
+
   const cards = useMemo(() => {
-    return barsData.map(({ type, name, address, category, id, location }) => {
-      const [lon1, lat1] = location.coordinates;
-      const { latitude, longitude } = curLocation;
+    return dataDisplay.map(
+      ({ type, name, address, category, id, location }) => {
+        const [lon1, lat1] = location.coordinates;
+        const { latitude, longitude } = curLocation;
 
-      const distance = distanceCalculator(lat1, lon1, latitude, longitude);
+        const distance = distanceCalculator(lat1, lon1, latitude, longitude);
 
-      return (
-        <BarCard
-          type={type}
-          name={name}
-          address={address}
-          categories={category}
-          key={id}
-          distance={distance}
-        />
-      );
-    });
-  }, [barsData, curLocation]);
+        return (
+          <BarCard
+            type={type}
+            name={name}
+            address={address}
+            categories={category}
+            key={id}
+            distance={distance}
+          />
+        );
+      }
+    );
+  }, [curLocation, dataDisplay]);
 
   return (
-    <div className="custom-scrollbar relative z-10 min-h-full flex-1 origin-left bg-bg text-white shadow-xl transition-all lg:w-1/3 w-4/5 overflow-y-scroll">
-      <div className="flex w-full justify-end px-4 py-2 lg:hidden">
+    <div className="custom-scrollbar relative z-10 min-h-full flex-1 origin-left bg-bg text-white shadow-xl transition-all w-1/3 overflow-y-scroll">
+      <div className="flex w-full justify-end px-4 py-2 sm:hidden">
         <div className="opacity-100 transition-opacity">
           <div className="p-4">
             <h1 className="text-4xl font-bold text-white">
@@ -80,6 +104,7 @@ const List = ({ barsData, curLocation }) => {
               </button>
             </div>
             <div>{cards}</div>
+            <button onClick={handleLoadPlus}>Plus</button>
           </div>
         </div>
       </div>
