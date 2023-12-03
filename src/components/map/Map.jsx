@@ -3,7 +3,7 @@ import mapboxgl from '!mapbox-gl';
 
 mapboxgl.accessToken = process.env.MAP_TOKEN;
 
-const Map = () => {
+const Map = ({ barsData }) => {
   // default states
   // Next, you will create some defaults for your app to use for the initial latitude, longitude, and zoom of the map
   const mapContainer = useRef(null);
@@ -19,9 +19,14 @@ const Map = () => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
+      // styles => https://docs.mapbox.com/api/maps/styles/#mapbox-styles
+      style: 'mapbox://styles/mapbox/dark-v11',
       center: [lng, lat],
       zoom: zoom,
+    });
+    barsData.forEach(({ location }) => {
+      const [lon, lat] = location.coordinates;
+      new mapboxgl.Marker().setLngLat([lon, lat]).addTo(map.current);
     });
   });
 

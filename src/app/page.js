@@ -46,7 +46,7 @@ export default function Home() {
       <NavBar></NavBar>
 
       <List barsData={barsData} curLocation={currentLocation}></List>
-      <Map></Map>
+      {!loading && <Map barsData={barsData}></Map>}
     </main>
   );
 }
