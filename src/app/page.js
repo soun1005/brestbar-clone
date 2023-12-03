@@ -5,11 +5,15 @@ import NavBar from '@/components/navBar/Navbar';
 import List from '@/components/list/List';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Map from '@/components/map/Map';
+import { useAppContext } from './Context';
 
 export default function Home() {
   const [barsData, setBarsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({});
+
+  const { selectedBarLocation } = useAppContext();
+  const { lat1, lon1 } = selectedBarLocation.newGeography || {};
 
   useEffect(() => {
     if ('geolocation' in navigator) {
@@ -41,12 +45,11 @@ export default function Home() {
   }, []);
 
   return (
-    // <main className="flex max-h-screen min-h-screen flex-col overflow-hidden">
     <main className="box-border flex max-h-screen min-h-screen flex-col">
       <NavBar></NavBar>
 
       <List barsData={barsData} curLocation={currentLocation}></List>
-      {!loading && <Map barsData={barsData}></Map>}
+      {!loading && <Map barsData={barsData} curLat={lat1} curLng={lon1}></Map>}
     </main>
   );
 }

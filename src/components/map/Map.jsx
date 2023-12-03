@@ -3,7 +3,7 @@ import mapboxgl from '!mapbox-gl';
 
 mapboxgl.accessToken = process.env.MAP_TOKEN;
 
-const Map = ({ barsData }) => {
+const Map = ({ barsData, curLng, curLat }) => {
   // default states
   // Next, you will create some defaults for your app to use for the initial latitude, longitude, and zoom of the map
   const mapContainer = useRef(null);
@@ -16,7 +16,7 @@ const Map = ({ barsData }) => {
   // The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
   // Next, initialize the map. The following code will be invoked right after the app is inserted into the DOM tree of your HTML page.
   useEffect(() => {
-    if (map.current) return; // initialize map only once
+    // if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       // styles => https://docs.mapbox.com/api/maps/styles/#mapbox-styles
@@ -24,11 +24,23 @@ const Map = ({ barsData }) => {
       center: [lng, lat],
       zoom: zoom,
     });
+
+    // to display points on the map
     barsData.forEach(({ location }) => {
       const [lon, lat] = location.coordinates;
       new mapboxgl.Marker().setLngLat([lon, lat]).addTo(map.current);
     });
-  });
+  }, [barsData, curLng, curLat, lat, lng, zoom]);
+
+  useEffect(() => {
+    console.log('hello');
+    if (curLng && curLat) {
+      setLng(curLng);
+      setLat(curLat);
+      setZoom(20);
+    }
+  }, [curLat, curLng]);
+  console.log(lng, lat);
 
   return (
     <div

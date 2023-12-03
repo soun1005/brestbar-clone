@@ -1,11 +1,20 @@
-import React from 'react';
+import { useState } from 'react';
+import { useAppContext } from '../../app/Context';
 
 const categoryMapper = {
   1: 'Au chaud',
   2: '✈️ Exotique',
 };
 
-const BarCard = ({ type, name, address, categories, distance }) => {
+const BarCard = ({ type, name, address, categories, distance, geography }) => {
+  const { setLocation } = useAppContext();
+
+  const handleEyeClick = () => {
+    console.log('eye is clicked');
+    // const newGeography = geography;
+    setLocation(geography);
+  };
+
   return (
     <div className="flex flex-col gap-4 rounded-2xl bg-gray-secondary p-6 text-white">
       {/* bar information and eye button */}
@@ -20,7 +29,12 @@ const BarCard = ({ type, name, address, categories, distance }) => {
             {address}
           </p>
         </div>
-        <button className="aspect-square rounded-full bg-violet p-4">👁</button>
+        <button
+          onClick={handleEyeClick}
+          className="aspect-square rounded-full bg-violet p-4"
+        >
+          👁
+        </button>
       </div>
       {/* tags if there's any */}
 

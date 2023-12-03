@@ -34,7 +34,6 @@ const List = ({ barsData, curLocation }) => {
       ({ type, name, address, category, id, location }) => {
         const [lon1, lat1] = location.coordinates;
         const { latitude, longitude } = curLocation;
-
         const distance = distanceCalculator(lat1, lon1, latitude, longitude);
 
         return (
@@ -45,6 +44,7 @@ const List = ({ barsData, curLocation }) => {
             categories={category}
             key={id}
             distance={distance}
+            geography={{ lat1, lon1 }}
           />
         );
       }
